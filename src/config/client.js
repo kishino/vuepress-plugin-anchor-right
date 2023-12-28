@@ -1,4 +1,4 @@
-import { defineClientConfig } from "@vuepress/client";
+import { defineClientConfig, usePageData, pageDataSymbol } from "@vuepress/client";
 import { watch, createApp, getCurrentInstance, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import AnchorRight from "./components/anchor-right/index.vue";
@@ -22,11 +22,13 @@ export default defineClientConfig({
         const app = createApp(AnchorRight);
         app.provide("route", route);
         app.provide("router", router);
+        app.provide(pageDataSymbol, page);
         app.mount(anchorRight);
       } catch (error) {}
     };
     const route = useRoute();
     const router = useRouter();
+    const page = usePageData();
     onMounted(() => {
       setTimeout(() => {
         mountAnchorRight();
